@@ -3,6 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
+    "build:electron": "nuxt build --prerender  && electron-builder",
+    "dev:electron": "nuxt dev --no-fork --port 3001",
     "build": "nuxt build",
     "dev": "nuxt dev --port 3001",
     "generate": "nuxt generate",
@@ -21,9 +23,14 @@
     "@nuxtjs/i18n": "^8.0.0-rc.7",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@types/node": "^18.16.19",
+    "electron": "^31.1.0",
+    "electron-builder": "^24.13.3",
     "nuxt": "^3.11.2",
+    "nuxt-electron": "^0.7.0",
     "sass": "^1.77.1",
     "typescript": "^5.1.6",
+    "vite-plugin-electron": "^0.28.7",
+    "vite-plugin-electron-renderer": "^0.14.5",
     "vue-tsc": "^1.8.5"
   },
   "dependencies": {
@@ -42,5 +49,6 @@
   },
   "overrides": {
     "vue": "latest"
-  }
+  },
+  "main": "dist-electron/main.js"
 }
