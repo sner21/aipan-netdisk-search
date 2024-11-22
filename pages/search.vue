@@ -32,7 +32,7 @@
           <!-- Stats Display with Enhanced Visual -->
           <div v-if="category === 'clouddrive' && loadingProgress.isLoading"
             class="flex-1 flex items-center gap-4 bg-white/50 dark:bg-gray-700/50 rounded-lg p-3 transition-all duration-300 backdrop-blur-sm">
-            <div class="flex-1 relative">
+            <div class="flex-1 relative overflow-hidden">
               <el-progress
                 :percentage="Math.round((loadingProgress.completed / loadingProgress.total) * 100)"
                 :stroke-width="4"
@@ -517,6 +517,7 @@ const handleSingleSearch = async (item) => {
       if (res.list && res.list.length) {
         smartCache.set(cacheKey, res.list);
         sources.value.push(...res.list);
+        skeletonLoading.value = false
       }
     } catch (err) {
       console.error(`Error fetching from ${item.api}:`, err);
@@ -544,7 +545,7 @@ const handleSearch = async () => {
     isLoading: true
   };
   
-  await Promise.all(sourcesApiEndpoints.map(item => handleSingleSearch(item) ));
+  await Promise.all(sourcesApiEndpoints.map(item => handleSingleSearch(item)));
 };
 
 // VOD搜索的单个处理函数
