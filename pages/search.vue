@@ -529,7 +529,7 @@ const handleSingleSearch = async (item) => {
   };
 
   queue.push(task);
-  runQueue();
+  await runQueue();
 };
 
 const handleSearch = async () => {
@@ -544,9 +544,7 @@ const handleSearch = async () => {
     isLoading: true
   };
   
-  sourcesApiEndpoints.forEach(item => {
-    handleSingleSearch(item);
-  });
+  await Promise.all(sourcesApiEndpoints.map(item => handleSingleSearch(item) ));
 };
 
 // VOD搜索的单个处理函数
@@ -598,14 +596,15 @@ const searchByVod = async () => {
   });
 };
 
-const search = (e) => {
+const search = async (e) => {
+  skeletonLoading.value = true
   if (badWords.includes(e)) {
     return alert('请勿输入敏感词')
   }
   keyword.value = e
-  skeletonLoading.value = false
   sources.value = []
-  handleSearch()
+  await handleSearch()
+  skeletonLoading.value = false
 }
 
 const colorMode = useColorMode()
